@@ -9,7 +9,7 @@ Este projeto tem como objetivo segmentar os clientes de uma operação comercial
 ## Estrutura do Projeto
 
 ### 1. **Carregamento dos Dados**
-- Leitura de transações financeiras (`Transacoes_2.csv`) e dados de clientes (`Clientes_2.csv`);
+- Leitura de transações financeiras (`Transacoes.csv`) e dados de clientes (`Clientes.csv`);
 - Padronização de formatos e verificação de valores nulos;
 - Conversão de colunas de datas e valores monetários.
 
@@ -20,38 +20,44 @@ Este projeto tem como objetivo segmentar os clientes de uma operação comercial
 - Ajustes em colunas como loja (`NUM_LOJA`) e `VALOR`.
 
 ### 3. **Análise Exploratória**
-- Estatísticas descritivas;
-- Distribuição geográfica dos clientes;
-- Representatividade de lojas em número de transações e valores;
-- Sazonalidade dos valores por mês/ano;
-- Distribuição dos valores de transação.
+- **Baixo valor agregado:** 75% das transações são abaixo de R$ 93,80; distribuição assimétrica com poucos valores altos.
+- **Concentração geográfica:** 83% dos usuários estão em São Paulo/SP; outras capitais apresentam potencial de expansão.
+- **Lojas destaque:** Lojas 11, 17 e 19 lideram em volume e valor; ticket médio varia entre elas.
+- **Sazonalidade:** Pico entre março e julho/23; queda em jan/fev após Black Friday e Natal.
+- **Comportamento de compra:** Predominância de transações pequenas; picos em valores redondos (R$ 100, R$ 200) indicam padrões de preferência.
 
-### 4. **Modelagem de Cluster RFV**
-- Definição das variáveis:
-  - **Recência**: Dias desde a última compra;
-  - **Frequência**: Total de transações por cliente;
-  - **Valor**: Soma dos valores transacionados;
-- Aplicação de `MinMaxScaler` para normalização;
-- Definição do número ideal de clusters via **Silhouette Score**;
-- Aplicação de **KMeans** para segmentação.
+### 4. Modelagem de Clusters RFV
+
+Segmentação dos clientes com base em três pilares:
+
+- **Recência**: Dias desde a última transação;
+- **Frequência**: Total de transações por cliente;
+- **Valor**: Soma dos valores transacionados.
+
+#### Pré-processamento
+Utilizamos o `MinMaxScaler` para normalizar os dados entre 0 e 1. Essa técnica mantém a forma da distribuição original e evita que variáveis com magnitudes maiores dominem o algoritmo de clustering (como o KMeans, que é sensível à escala dos dados).
+
+#### Escolha do número de clusters
+Aplicamos o **Silhouette Score** para avaliar a coesão e separação entre os grupos. Apesar do maior score ter ocorrido com 2 clusters, optamos por **4 clusters** para garantir granularidade analítica sem perder qualidade na segmentação.
+
 
 ### 5. **Perfis Gerados**
 
-Segmentamos os clientes com base em comportamento e valor transacionado, identificando 4 perfis por produto:
+Segmentação dos clientes com base em comportamento, identificando 4 perfis por produto:
 
-**Recarga Digital**
-- **Entusiastas:** Engajados, mas com valores baixos.
-- **Desacelerados:** Uso esporádico e risco de churn.
-- **Estrelas:** Heavy users.
-- **Abandonadores:** Inativos, porém com valor relevante.
+**Produto Recarga:**
+- 🟢 **Entusiastas** – Engajados, mas com valores baixos.
+- 🟡 **Desacelerados** – Baixa frequência e risco de churn.
+- 🔵 **Estrelas** – Heavy users.
+- 🔴 **Abandonadores** – Inativos, mas ainda com valor relevante.
 
-**Vale Pré-Pago**
-- **Econômicos:** Regulares e estáveis.
-- **Desengajados:** Pouco ou nenhum uso.
-- **Campeões:** Heavy users.
-- **Pontuais:** Uso ocasional com bons valores.
+**Produto Vale:**
+- 🟢 **Econômicos** – Regulares e estáveis.
+- ⚫ **Desengajados** – Pouco ou nenhum uso.
+- 🔵 **Campeões** – Heavy users.
+- 🟡 **Pontuais** – Uso esporádico com bons valores.
 
-### Ações recomendadas
+#### Ações recomendadas
 
 - **Entusiastas (Recarga):** Engajar com promoções e experiências sociais.
 - **Desacelerados (Recarga):** Reativar com cross-sell e pacotes promocionais.
@@ -62,9 +68,21 @@ Segmentamos os clientes com base em comportamento e valor transacionado, identif
 > Os nomes são definidos com base nas características médias de cada grupo (recência, frequência e valor).
 
 ### 6. **Visualização**
-- Gráfico de dispersão com os clusters coloridos por perfil;
-- Plotagem dos centróides;
-- Tabela resumo com média de Recência, Frequência e Valor por perfil.
+
+Abaixo estão os principais recursos visuais utilizados na análise de segmentação:
+
+- **Avaliação da Qualidade da Segmentação - Silhouette Score**  
+  Métrica usada para avaliar a coesão e separação entre os clusters.  
+  ![Silhouette Score](img/Silhouette%20Score.png)
+
+- **Segmentação dos Clientes - Recarga Digital**  
+  Gráfico de dispersão com os clusters coloridos por perfil.  
+  ![Segmentação Recarga](img/Segmentação%20de%20Clientes%20RECARGA.png)
+
+- **Segmentação dos Clientes - Vale Pré-Pago**  
+  Gráfico de dispersão com os clusters coloridos e centróides plotados.  
+  ![Segmentação Vale](img/Segmentação%20de%20Clientes%20VALE.png)
+
 
 ### 7. **Exportação**
 - Exportação dos resultados para Excel:
@@ -80,6 +98,9 @@ Segmentamos os clientes com base em comportamento e valor transacionado, identif
 ├── Transacoes.csv
 ├── Clientes.csv
 
+📁 documentacao/
+├── entregavel_pm.md
+
 📁 output/
 ├── usuarios_por_cluster_produto_vale.xlsx
 ├── usuarios_por_cluster_produto_digital.xlsx
@@ -88,7 +109,9 @@ Segmentamos os clientes com base em comportamento e valor transacionado, identif
 └── clusterizacao_rfv.ipynb
 
 .gitignore
+LICENSE.txt
 README.md
+requirements.txt
 ```
 
 ## Requisitos
@@ -122,8 +145,19 @@ pip install -r requirements.txt
 
 Execute o projeto no Jupyter Notebook. Abra o arquivo:
 ```bash
-scr/ETL.ipynb
+scr/clusterizacao_rfv.ipynb
 ```
 
-# Autor:
-Mileno Epifânio ([GitHub](https://github.com/milenoepifanio) / [LinkedIn](https://www.linkedin.com/in/milenoepifanio/))
+---
+
+## Licença
+
+Este projeto está licenciado sob a [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.pt_BR).  
+Você pode usar, compartilhar e adaptar, **desde que cite a autoria (Mileno Epifanio)** e **não utilize para fins comerciais**.
+
+
+---
+## Sobre o Autor
+
+Projeto desenvolvido por **Mileno Epifanio** — Analista de Dados com foco em soluções orientadas por dados para tomada de decisão.  
+[LinkedIn](https://www.linkedin.com/in/milenoepifanio) • [GitHub](https://github.com/milenoepifanio)
