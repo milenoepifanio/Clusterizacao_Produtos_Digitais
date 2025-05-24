@@ -1,5 +1,54 @@
+# =====================================
+# Ignorar arquivos/pastas do Python
+# =====================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.log
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+*.env
+
+# Cache do pip
+pip-wheel-metadata/
+*.whl
+
+# Arquivos de log e temporários
+*.log
+*.tmp
+*.bak
+
+# Arquivos de saída comuns
+*.out
+*.DS_Store
+Thumbs.db
+
+# Arquivos de notebooks Jupyter salvos automaticamente
+.ipynb_checkpoints/
+
+# Arquivos Parquet e similares
+*.parquet
+*.feather
+*.h5
+
+# Arquivos Excel temporários
+~$*.xlsx
+
+# Arquivos de IDEs (VS Code, PyCharm, etc.)
+.vscode/
+.idea/
+
+# Pastas que você quer ignorar
 /apresentacao/
 /data original/
 /desafio/
-/documentacao anterior/
+documentacao_anterior/
 /scr anterior/
