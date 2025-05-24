@@ -36,19 +36,28 @@ Este projeto tem como objetivo segmentar os clientes de uma operação comercial
 - Aplicação de **KMeans** para segmentação.
 
 ### 5. **Perfis Gerados**
-Para cada produto, são definidos 4 perfis distintos:
 
-#### ▸ PRODUTO VALE
-- **Campeões**
-- **Pontuais**
-- **Desengajados**
-- **Econômicos**
+Segmentamos os clientes com base em comportamento e valor transacionado, identificando 4 perfis por produto:
 
-#### ▸ PRODUTO DIGITAL
-- **Estrelas**
-- **Entusiastas**
-- **Desacelerados**
-- **Abandonadores**
+**Recarga Digital**
+- **Entusiastas:** Engajados, mas com valores baixos.
+- **Desacelerados:** Uso esporádico e risco de churn.
+- **Estrelas:** Heavy users.
+- **Abandonadores:** Inativos, porém com valor relevante.
+
+**Vale Pré-Pago**
+- **Econômicos:** Regulares e estáveis.
+- **Desengajados:** Pouco ou nenhum uso.
+- **Campeões:** Heavy users.
+- **Pontuais:** Uso ocasional com bons valores.
+
+### Ações recomendadas
+
+- **Entusiastas (Recarga):** Engajar com promoções e experiências sociais.
+- **Desacelerados (Recarga):** Reativar com cross-sell e pacotes promocionais.
+- **Campeões (Vale):** Fidelizar com benefícios e gamificação.
+- **Econômicos (Vale):** Estimular com ações de upsell e engajamento.
+
 
 > Os nomes são definidos com base nas características médias de cada grupo (recência, frequência e valor).
 
